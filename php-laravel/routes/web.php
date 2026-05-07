@@ -4,8 +4,6 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
 use App\Models\Product;
-use Hamcrest\Description;
-use Whoops\Run;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,12 +16,14 @@ use Whoops\Run;
 |
 */
 
+Route::get('/', function () {
+    return view('welcome');
+});
+
 Route::middleware('auth')->group(function () {
-
-
-    Route::get('/', function () {
-        return view('welcome');
-    });
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 
     Route::get('/product', function () {
         // $products =Product::all();
@@ -72,3 +72,5 @@ Route::middleware('auth')->group(function () {
             ->with('info', 'Product updated successfully');
     })->name('product.update');
 });
+
+require __DIR__.'/auth.php';

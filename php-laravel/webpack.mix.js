@@ -15,3 +15,10 @@ mix.js('resources/js/app.js', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [
         //
     ]);
+
+// Work around ProgressPlugin schema changes that break webpackbar in this setup.
+mix.override((webpackConfig) => {
+    webpackConfig.plugins = (webpackConfig.plugins || []).filter(
+        (plugin) => plugin?.constructor?.name !== 'WebpackBar'
+    );
+});
